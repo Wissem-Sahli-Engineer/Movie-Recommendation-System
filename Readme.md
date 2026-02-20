@@ -5,6 +5,7 @@ The goal is to predict how a user would rate a movie and whether or not they wil
 
 ## Project Structure
 
+```
 Movie-Recommendation-System/
 │
 ├── data/
@@ -15,7 +16,7 @@ Movie-Recommendation-System/
 ├── analysis.ipynb
 ├──Requirements.txt
 └── README.md
-
+```
 ---
 
 ## Installation
@@ -23,8 +24,8 @@ Movie-Recommendation-System/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/movie-recommendation-system.git
-cd movie-recommendation-system
+git clone https://github.com/yWissem-Sahli-Engineer/Movie-Recommendation-System.git
+cd Movie-Recommendation-System
 ```
 
 2. Install dependencies:
@@ -35,11 +36,11 @@ pip install -r requirements.txt
 
 ## Data Acquisition & Initialization
 
-**Data Source:** Downloaded the dataset.
+**Data Source:** 
+Downloaded from the [MovieLens Latest Small Dataset](https://grouplens.org/datasets/movielens/latest/)
 
 **Action:**
 - Extracted the zip file containing `ratings.csv`, `movies.csv`, and `tags.csv`.
-- Initialized the project environment using Python and Pandas.
 - Loaded the `.csv` files into Pandas DataFrames for manipulation.
 
 ---
