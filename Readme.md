@@ -95,7 +95,7 @@ Downloaded from the [MovieLens Latest Small Dataset](https://grouplens.org/datas
 
 ---
 
-## Training & Evaluation (Baseline Models)
+## Part 1: Regression — Predicting the Rating
 
 ### 1. Linear Regression
 - Trained a `LinearRegression` model on the genre features.
@@ -124,30 +124,53 @@ Downloaded from the [MovieLens Latest Small Dataset](https://grouplens.org/datas
 - Trained an `ElasticNet` model with `alpha=0.01` and `l1_ratio=0.1`.
 - **Training RMSE: ~1.022** (comparable to Ridge and Linear Regression).
 
----
+### 6. Hyperparameter Tuning
 
-## Hyperparameter Tuning
-
-### GridSearchCV (ElasticNet)
+#### GridSearchCV (ElasticNet)
 - Searched over a grid of `alpha` and `l1_ratio` values.
 - **Best parameters found:** `alpha=0.01`, `l1_ratio=0.1`.
 
-### RandomizedSearchCV (Ridge)
+#### RandomizedSearchCV (Ridge)
 - Searched over a log-uniform distribution for `alpha` with 100 iterations.
 - **Best alpha found: 41.25**
 
----
-
-## Evaluation on the Test Set
-
+### 7. Evaluation on the Test Set
 - Applied the preprocessing pipeline to the test set.
 - Used the best model (Linear Regression) for final predictions.
 - **Final Test RMSE: ~1.026**
 
----
-
-## Conclusion (So Far)
+### Regression Conclusion
 
 A Linear Regression model using only genres is a **Baseline Model**. It's like a weather app that only tells you the season (e.g., "It's Summer") but can't tell you the temperature for today. It is useful as a **starting point**, but not for a final product.
 
-> **More work will be added** — stay tuned for improved feature engineering, collaborative filtering, and more advanced models.
+---
+
+## Part 2: Classification — Predicting "Like" or "Not Like"
+
+### Problem Setup
+- Converted the regression target into a **binary classification** problem:
+  - **1 ("Liked"):** rating ≥ 4.0
+  - **0 ("Not Liked"):** rating < 4.0
+- Class distribution is roughly balanced: ~51.8% Not Liked vs. ~48.2% Liked.
+
+### Logistic Regression
+- Trained a `LogisticRegression` model (`random_state=42`) on the same genre features used for regression.
+
+### Confusion Matrix
+
+|                    | Predicted: Not Liked | Predicted: Liked |
+|--------------------|----------------------|------------------|
+| **Actual: Not Liked** | 27,757 (TN)          | 14,022 (FP)      |
+| **Actual: Liked**     | 20,520 (FN)          | 18,369 (TP)      |
+
+### Precision, Recall & F1-Score
+
+| Class       | Precision | Recall | F1-Score | Support |
+|-------------|-----------|--------|----------|---------|
+| Not Liked   | 0.57      | 0.66   | 0.62     | 41,779  |
+| Liked       | 0.57      | 0.47   | 0.52     | 38,889  |
+| **Accuracy**|           |        | **0.57** | 80,668  |
+
+### Classification Conclusion
+
+The Logistic Regression model achieves an accuracy of **~57%**, which is only marginally better than random guessing on a balanced dataset. This further confirms that **genres alone are insufficient** to accurately predict user preferences — additional features such as user history, collaborative filtering signals, or content embeddings would be needed to build a more effective recommendation system.
